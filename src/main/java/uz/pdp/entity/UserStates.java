@@ -1,0 +1,12 @@
+package uz.pdp.entity;
+
+public enum UserStates {
+    START,
+    USER_MENU,
+    SENDING_HOMEWORK_DESCRIPTION,
+    SHOW_OLD_HOMEWORK_USER,
+    ADMIN_MENU,
+    SEND_HOMEWORK_ZIP_FILE,
+    GRADING_HOMEWORK,
+    FEEDBACK_HOMEWORK
+}
