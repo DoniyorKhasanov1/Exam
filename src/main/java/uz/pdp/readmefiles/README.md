@@ -221,5 +221,31 @@ Stream va Collection o‘rtasidagi asosiy farq shundaki:
 Collection — bu ma'lumotlarni saqlashga mo‘ljallangan tuzilma.
 Stream esa — bu ma'lumotlarni oqim tarzida qayta ishlash uchun vosita.
 
+*** 
+Tranzaksiya nima?
+Tranzaksiya — ma'lumotlar bazasida bir yoki bir nechta operatsiyalarni bir butun sifatida bajarish jarayoni bo'lib, ular yaxlit va muvofiq tarzda amalga oshiriladi. Tranzaksiya ma'lumotlar bazasining holatini bir muvofiq holatdan boshqa muvofiq holatga o'tkazadi va agar xatolik yuz bersa, o'zgarishlar bekor qilinadi.
 
+Misol: Bankda bir hisobdan boshqa hisobga pul o'tkazish. Bu jarayon ikkita operatsiyani o'z ichiga oladi:
+Birinchi hisobdan pulni ayirish.
+Ikkinchi hisobga pulni qo'shish. Agar ikkala operatsiya ham muvaffaqiyatli bajarilmasa, tranzaksiya bekor qilinadi, aks holda ma'lumotlar bazasi notog'ri holatda qolishi mumkin.
+Tranzaksiyalar ma'lumotlar bazasining ishonchliligi, muvofiqligi va xavfsizligini ta'minlash uchun ishlatiladi.
+
+Tranzaksiyalarning asosiy xususiyatlari (ACID)
+ACID xususiyatlari
+Atomicity
+Ta'rifi: Tranzaksiyadagi barcha operatsiyalar yaxlit tarzda bajarilishi kerak, ya'ni tranzaksiyaning barcha qismlari muvaffaqiyatli bajariladi yoki hech biri bajarilmaydi.
+Misol: Bank tranzaksiyasida bir hisobdan ikkinchi hisobga pul o'tkazishda, agar pul bir hisobdan chiqarilsa, lekin boshqa hisobga tushmasa, tranzaksiya to'liq bekor qilinadi.
+PostgreSQL'da: Tranzaksiyalar BEGIN, COMMIT va ROLLBACK buyruqlari orqali boshqariladi. Agar tranzaksiya muvaffaqiyatsiz bo'lsa, ROLLBACK barcha o'zgarishlarni bekor qiladi.
+Consistency
+Ta'rifi: Tranzaksiya ma'lumotlar bazasini bir muvofiq holatdan boshqa muvofiq holatga o'tkazadi. Bunda barcha ma'lumotlar integrallik qoidalariga (constraints), triggerlarga va boshqa qoidalarga rioya qilishi kerak.
+Misol: Agar ma'lumotlar bazasida hisob balansining manfiy bo'lmasligi qoidasi bo'lsa, tranzaksiya ushbu qoidani buzmaydi.
+PostgreSQL'da: Foreign key constraints, unique constraints va triggerlar orqali muvofiqlik ta'minlanadi. Qoida buzilsa, tranzaksiya ROLLBACK bilan bekor qilinadi.
+Isolation
+Ta'rifi: Tranzaksiyalar bir-biridan mustaqil ravishda ishlaydi. Bir tranzaksiya boshqa tranzaksiyalarning natijalariga ta'sir qilmasdan yoki ulardan ta'sirlanmasdan bajariladi.
+Misol: Ikkita foydalanuvchi bir vaqtning o'zida bir hisobni o'zgartirsa, izolyatsiya ularning o'zgarishlari bir-biriga aralashmasligini ta'minlaydi.
+PostgreSQL'da: MVCC (Multiversion Concurrency Control) mexanizmi ishlatiladi. Izolyatsiya darajalari (READ COMMITTED, REPEATABLE READ, SERIALIZABLE) tranzaksiyalar o'rtasidagi o'zaro ta'sirni boshqaradi.
+Durability
+Ta'rifi: Tranzaksiya muvaffaqiyatli yakunlanganidan so'ng (COMMIT qilinganidan keyin), o'zgarishlar doimiy ravishda saqlanadi va tizim nosozligi bo'lsa ham yo'qolmaydi.
+Misol: Pul o'tkazish tranzaksiyasi yakunlansa, tizim o'chib-qayta yoqilganda ham o'zgarishlar saqlanib qoladi.
+PostgreSQL'da: WAL (Write-Ahead Logging) mexanizmi orqali barqarorlik ta'minlanadi.
 
